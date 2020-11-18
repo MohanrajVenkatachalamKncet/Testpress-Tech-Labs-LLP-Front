@@ -1,32 +1,8 @@
-import React, { useContext } from 'react'
+import React, { useContext , useState , useEffect} from 'react'
 import {Link } from 'react-router-dom';
 import {UserContext} from '../context/global';
-import axios from 'axios'
-// import {dataquestion,datatitle} from "../data/dataList";
-// const QuizList=()=>datatitle.map((item,index)=>{
-//         return(
-//             <div className="p-1 col-12" style={{textAlign:'center'}}>
-//                <Link to="/userQuizPortal">
-//                     <button className="btn-dark p-2" style={{width:"100px",borderRadius:'10px'}}>
-//                      {item.title}
-//                     </button>
-//                </Link>
-//             </div>
-//         )
-// })
 export default function UserQuiz() {
-    const {userName,savedQuizTitle,quizId,setQuizId,dataquestion,setdataquestion}=useContext(UserContext);
-    const readDataAxios=(e)=>{
-        axios.get(`http://localhost:7000/Quiz/getData/${quizId}`,{
-          id:quizId
-        })
-        
-        .then((res)=>{
-          console.log(res.data);
-         // setdataquestion(res.data);
-        })
-        .catch((err)=>{console.log("Data Not Found")});
-      }
+    const {userName,savedQuizTitle,quizId,setQuizId,dataFromServer, setDataFromServer}=useContext(UserContext);
     return (
         <div className="container-fluid" style={{backgroundColor:'#77bfa3',width: "100vw",minHeight: "100vh"}}>
         <div style={{paddingTop:"10%"}} className="p-sm-5">
@@ -39,7 +15,7 @@ export default function UserQuiz() {
                 <input style={{width:'300px'}} placeholder={quizId} type="text" onChange={(e)=>{setQuizId(e.target.value)}} className="form-control"/>
                 <div className="pt-4">
                     <Link to="/userQuizPortal">
-                    <button className="btn-dark" style={{width:"100px",borderRadius:'10px'}} onClick={(e)=>readDataAxios(e)}>Click to Start Quiz</button>
+                    <button className="btn-dark" style={{width:"100px",borderRadius:'10px'}} >Click to Start Quiz</button>
                     </Link>
                 </div>
             </div>

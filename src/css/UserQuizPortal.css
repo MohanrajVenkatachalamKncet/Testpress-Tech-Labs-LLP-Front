@@ -1,0 +1,7 @@
+.quiz-button:hover{
+    background-color: yellow;
+  }
+.quiz-button{
+    background-color:#255f6b;
+    color:white;
+}

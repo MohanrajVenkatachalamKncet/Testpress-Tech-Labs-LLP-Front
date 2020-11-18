@@ -1,13 +1,30 @@
-import React, {useContext , useState} from 'react';
-import {dataquestion} from '../data/dataList';
+import React, {useContext , useState , useEffect} from 'react';
+import axios from 'axios';
+import "../css/UserQuizPortal.css";
 import {UserContext} from "../context/global";
 import {Link} from 'react-router-dom';
 export default function UserQuizPortal() {
-const {score,setScore,questions,setQuestions,answer,setAnswer}=useContext(UserContext);  
+const {score,setScore,questions,setQuestions,answer,quizId,setQuizId,setAnswer,dataFromServer,setDataFromServer}=useContext(UserContext);  
 const [resultEnable,setResultEnable]=useState(false);
 const [result,setResult]=useState(false);
 const [yourAnswer,setYourAnswer]=useState('');
 const [buttonClick, setButtonClick] = useState("false");
+
+const [dataquestion, setdataquestion] = useState([]);
+console.log(dataquestion); 
+useEffect(() => {
+    readDataAxios();
+    return(()=>{
+      })
+  },[]);
+  const readDataAxios=(e)=>{
+      axios.get(`http://localhost:7000/Quiz/getData/${quizId}`)
+      .then((res)=>{
+        setdataquestion([...res.data])
+      })
+      .catch((err)=>{console.log("Data Not Found"+err)});
+}
+
 function clear(){
     setScore(0)
     setQuestions(0)
@@ -24,7 +41,7 @@ return(
                     onClick={scoreAndNext} 
                     style={{backgroundColor:"#255f6b",fontSize:'25px',color:"white"}}
             >
-            {result} - Your Score is {score}/10 
+            {result} - Your Score is {score}/{questions+1}
             </button>
         </div>
         <div className="mr-4" style={{padding:"1px",marginLeft:"10%",maxWidth:'35vw'}}>                         
@@ -41,18 +58,20 @@ return(
             </Link>
         </div>
     </div>:''}
-
-    <div className="d-flex row text-left">
+    {dataquestion.length>0?
+    <div>
+        <div className="d-flex row text-left">
         <div className="col-12">
             <div style={{userSelect:"none",fontSize:30}}>{questions+1}. {dataquestion[0].question}</div>
         </div>
     </div>
     <div className="mr-4" style={{padding:"20px",paddingLeft:"30px",maxWidth:'80vw'}}>
-            <button value={dataquestion[0].option1} className="col-12 btn text-left p-2 m-2 btn-overlay" onClick={scoreAndNext} style={{backgroundColor:"#255f6b",color:"white",pointerEvents:buttonClick}}>{dataquestion[questions].option1}</button> 
-            <button value={dataquestion[0].option2} className="col-12 btn text-left p-2 m-2 btn-overlay" onClick={scoreAndNext} style={{backgroundColor:"#255f6b",color:"white",pointerEvents:buttonClick}}>{dataquestion[questions].option2}</button>
-            <button value={dataquestion[0].option3} className="col-12 btn text-left p-2 m-2 btn-overlay" onClick={scoreAndNext} style={{backgroundColor:"#255f6b",color:"white",pointerEvents:buttonClick}}>{dataquestion[questions].option3}</button>
-            <button value={dataquestion[0].option4} className="col-12 btn text-left p-2 m-2 btn-overlay" onClick={scoreAndNext} style={{backgroundColor:"#255f6b",color:"white",pointerEvents:buttonClick}}>{dataquestion[questions].option4}</button>
+            <button value={dataquestion[0].option1} className="col-12 btn text-left p-2 m-2 btn-overlay quiz-button" onClick={scoreAndNext} style={{pointerEvents:buttonClick}}>{dataquestion[questions].option1}</button> 
+            <button value={dataquestion[0].option2} className="col-12 btn text-left p-2 m-2 btn-overlay quiz-button" onClick={scoreAndNext} style={{pointerEvents:buttonClick}}>{dataquestion[questions].option2}</button>
+            <button value={dataquestion[0].option3} className="col-12 btn text-left p-2 m-2 btn-overlay quiz-button" onClick={scoreAndNext} style={{pointerEvents:buttonClick}}>{dataquestion[questions].option3}</button>
+            <button value={dataquestion[0].option4} className="col-12 btn text-left p-2 m-2 btn-overlay quiz-button" onClick={scoreAndNext} style={{pointerEvents:buttonClick}}>{dataquestion[questions].option4}</button>
     </div>
+    </div>:''}
 
     <div className="mr-4" style={{padding:"20px",paddingLeft:"30px",maxWidth:'80vw'}}>                         
     <button className="col-12 btn text-left p-2 m-2 btn-overlay" 
@@ -72,6 +91,7 @@ return(
 }
 
 function scoreAndNext(e){
+
     setAnswer(dataquestion[questions].correct);
     setButtonClick('none')
     if(dataquestion[questions].correct==e.target.value)
@@ -90,9 +110,10 @@ function scoreAndNext(e){
                 }
             else
                 setResultEnable(true);                           
-        },1000); 
+        },2000); 
 }
 return (
+
     <div className="container-fluid" style={{backgroundColor:'#77bfa3',width: "200vw",minHeight: "100vh"}}>
         <p className="pt-4" style={{fontSize:"30px",padding:'2px'}}>Welcome to Quiz Assesment</p>
         <QuestionsAnOptions/>

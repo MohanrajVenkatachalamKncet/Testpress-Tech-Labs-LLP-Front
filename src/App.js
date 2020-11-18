@@ -21,7 +21,7 @@ function App() {
   const [option3Form, setOption3Form] = useState('Answer Option 3');
   const [option4Form, setOption4Form] = useState('Answer Option 4');
   const [correctForm, setCorrectForm] = useState('Enter Correct Answer');
-  const [dataquestion, setdataquestion] = useState([]);
+  const [dataFromServer, setDataFromServer] = useState([]);
   return (
     <UserContext.Provider value={{
       userName,setUserName,
@@ -40,7 +40,7 @@ function App() {
       option4Form, setOption4Form,
       correctForm, setCorrectForm,
       quizId,setQuizId,
-      dataquestion,setdataquestion,
+      dataFromServer, setDataFromServer,
     }}>
       <Switch>
         <Router/>

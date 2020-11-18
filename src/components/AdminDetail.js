@@ -14,12 +14,7 @@ export default function AdminDetail() {
       option4Form, setOption4Form,
       correctForm, setCorrectForm,
     }=useContext(UserContext);
-    const display=()=>{
-        // alert(idForm+questionForm+option1Form+option2Form+option3Form+option4Form+correctForm)
-    }
-
     const createDataAxios=(e)=>{
-        display()
         var a={
             "ID":idForm,
             "TITLE":quizTitle,
@@ -32,17 +27,23 @@ export default function AdminDetail() {
         }
         console.log(idForm+quizTitle+questionForm+option1Form+option2Form+option3Form+option4Form+correctForm)
         axios.post(`http://localhost:7000/Quiz/createData`,a)
-        .then((res)=>{console.log(res)})
-        .catch((err)=>{console.log("Name Not send due to"+" "+err);})
+        .then((res)=>{
+            alert("Quiz Succesfully Created");
+            console.log(res);
+        })
+        .catch((err)=>{
+            alert("Quiz Not Succesfully Created");
+            console.log("Name Not send due to"+" "+err);
+        })
       }
     return (
-        <div className="container-fluid" style={{backgroundColor:'#77bfa3',width: "100vw",minHeight: "100vh"}}>
-        <div style={{paddingTop:"10%"}} className="p-sm-5">
+    <div className="container-fluid" style={{backgroundColor:'#77bfa3',width: "100vw",minHeight: "100vh"}}>
+      <div style={{paddingTop:"10%"}} className="p-sm-5">
         <header>
-        <p className="text-center" style={{fontSize:"30px"}}>Welcome to Quiz Assesment</p>
-        <p className="text-center" style={{fontSize:"30px"}}>Admin Panel</p>
+            <p className="text-center" style={{fontSize:"30px"}}>Welcome to Quiz Assesment</p>
+            <p className="text-center" style={{fontSize:"30px"}}>Admin Panel</p>
         </header>
-        <form style={{}}>
+        <form>
             <div className="form-group">
                 <label for="exampleInputEmail1">Name</label>
                 <input style={{width:'300px'}} type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder={adminName} onChange={(e)=>setAdminName(e.target.value)}/>
@@ -79,9 +80,7 @@ export default function AdminDetail() {
                 <label for="exampleInputPassword1">Correct</label>
                 <input style={{width:'300px'}}  type="text" className="form-control" id="exampleInputPassword1" placeholder={correctForm} onChange={(e)=>setCorrectForm(e.target.value)}/>
             </div>
-            {/* <Link to="/adminQuiz"> */}
-                <button type="submit" className="btn btn-primary" onClick={(e)=>createDataAxios(e)}>Click to Create Quiz</button>
-            {/* </Link> */}
+            <button type="submit" className="btn btn-primary" onClick={(e)=>createDataAxios(e)}>Click to Create Quiz</button>
             <div className="p-1 pt-4">
             <Link to="/">
                 <button type="submit" className="btn btn-primary">Home</button>

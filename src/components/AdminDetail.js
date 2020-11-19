@@ -1,32 +1,98 @@
+//Import Necessary Package and Files
 import React, { useState , useContext} from 'react';
 import {Link} from 'react-router-dom';
 import {UserContext} from "../context/global";
-export default function AdminDetail() {
-    const {adminName,setAdminName,quizTitle,setQuizTitle}=useContext(UserContext)
-    const display=()=>{
-        alert(adminName+" "+quizTitle);
-    }
+import axios from 'axios';
+import '../css/AdminDetail.css';
 
+//Main Function
+export default function AdminDetail() {
+    
+    //Importing Global States
+    const {
+      idForm, setIdForm,
+      questionForm, setQuestionForm,
+      option1Form, setOption1Form,
+      option2Form, setOption2Form,
+      option3Form, setOption3Form,
+      option4Form, setOption4Form,
+      correctForm, setCorrectForm,
+    }=useContext(UserContext);
+    const createDataAxios=(e)=>{
+    
+        // Data Assigning To MAP OBJECT
+    var data={
+        "ID":idForm,
+        "QUESTION":questionForm,
+        "OPTION1":option1Form,
+        "OPTION2":option2Form,
+        "OPTION3":option3Form,
+        "OPTION4":option4Form,
+        "CORRECT":correctForm
+    }
+    
+    //Server Post Method ****Send Data to Database****
+    axios.post(`http:
+    //localhost:7000/Quiz/createData`,data)
+        .then((res)=>{
+            alert("Quiz Succesfully Created");
+            console.log(res);
+        })
+        .catch((err)=>{
+            alert("Quiz Not Succesfully Created");
+            console.log("Name Not send due to"+" "+err);
+        })
+    }
+    
+    //Main Return Statement
     return (
-        <div className="container-fluid" style={{backgroundColor:'#77bfa3',width: "100vw",minHeight: "100vh"}}>
-        <div style={{paddingTop:"10%"}} className="p-sm-5">
+    <div className="container-fluid container-css">
+      <div className="p-sm-5 padding-css">
         <header>
-        <p className="text-center" style={{fontSize:"30px"}}>Welcome to Quiz Assesment</p>
-        <p className="text-center" style={{fontSize:"30px"}}>Admin Panel</p>
+            <p className="text-center p-css">Welcome to Quiz Assesment</p>
+            <p className="text-center p-css">Admin Panel</p>
         </header>
-        <form style={{}}>
-            <div className="form-group">
-                <label for="exampleInputEmail1">Name</label>
-                <input style={{width:'300px'}} type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder={adminName} onChange={(e)=>setAdminName(e.target.value)}/>
-            </div>
-            <div className="form-group">
+        
+        {/* Question Entry Form */}
+        <form>
+            {/* <div className="form-group">
                 <label for="exampleInputPassword1">Quiz Title</label>
                 <input style={{width:'300px'}}  type="text" className="form-control" id="exampleInputPassword1" placeholder={quizTitle} onChange={(e)=>setQuizTitle(e.target.value)}/>
+            </div> */}
+            <div className="form-group">
+                <label for="exampleInputPassword1">id</label>
+                <input type="text" className="form-control input-css" id="exampleInputPassword1" placeholder={idForm} onChange={(e)=>setIdForm(e.target.value)}/>
             </div>
-            <Link to="/adminQuiz">
-            <button type="submit" className="btn btn-primary" onClick={display}>Click to Create Quiz</button>
-            </Link>
-            
+            <div className="form-group">
+                <label for="exampleInputPassword1">Question</label>
+                <input type="text" className="form-control input-css" id="exampleInputPassword1" placeholder={questionForm} onChange={(e)=>setQuestionForm(e.target.value)}/>
+            </div>
+            <div className="form-group">
+                <label for="exampleInputPassword1">Option 1</label>
+                <input type="text" className="form-control input-css" id="exampleInputPassword1" placeholder={option1Form} onChange={(e)=>setOption1Form(e.target.value)}/>
+            </div>
+            <div className="form-group">
+                <label for="exampleInputPassword1">Option 2</label>
+                <input type="text" className="form-control input-css" id="exampleInputPassword1" placeholder={option2Form} onChange={(e)=>setOption2Form(e.target.value)}/>
+            </div>
+            <div className="form-group">
+                <label for="exampleInputPassword1">Option 3</label>
+                <input type="text" className="form-control input-css" id="exampleInputPassword1" placeholder={option3Form} onChange={(e)=>setOption3Form(e.target.value)}/>
+            </div>
+            <div className="form-group">
+                <label for="exampleInputPassword1">Option 4</label>
+                <input type="text" className="form-control input-css" id="exampleInputPassword1" placeholder={option4Form} onChange={(e)=>setOption4Form(e.target.value)}/>
+            </div>
+            <div className="form-group">
+                <label for="exampleInputPassword1">Correct</label>
+                <input type="text" className="form-control input-css" id="exampleInputPassword1" placeholder={correctForm} onChange={(e)=>setCorrectForm(e.target.value)}/>
+            </div>
+            <button type="submit" className="btn btn-primary" onClick={(e)=>createDataAxios(e)}>Click to Create Quiz</button>
+            <div className="p-1 pt-4">
+                <Link to="/">
+                <button type="submit" className="btn btn-primary">Home</button>
+                </Link>
+            </div>
         </form>
       </div>
     </div>

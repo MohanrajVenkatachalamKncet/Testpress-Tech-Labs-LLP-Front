@@ -1,11 +1,17 @@
+//Import Necessary Package and Files
 import React from 'react'
 import {Link} from 'react-router-dom';
+import "../css/HomeScreen.css"
+
+//Main Function
 export default function HomeScreen() {
-    return (
-        <div className="container-fluid" style={{backgroundColor:'#77bfa3',width: "100vw",minHeight: "100vh"}}>
-        <div style={{paddingTop:"10%"}} className="p-sm-5">
+  
+  //Main Return Statement  
+  return (
+        <div className="container-fluid container-css">
+        <div className="p-sm-5 padding-css">
         <header>
-        <p className="text-center" style={{fontSize:"30px"}}>Welcome to Quiz Assesment</p>
+        <p className="text-center welcome-p-css">Welcome to Quiz Assesment</p>
         </header>
         <div className="d-flex row">
           <div className="p-4 col-12" style={{textAlign:'center'}}>

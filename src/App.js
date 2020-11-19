@@ -3,6 +3,8 @@ import {Switch } from 'react-router-dom';
 import Router from './Router';
 import { UserContext } from "./context/global";
 function App() {
+  // **********GLOBAL STATES**********
+  
   //user
   const [userName, setUserName] = useState("Enter Your Name");
   const [rollNumber, setRollNumber] = useState("Enter Your Roll Number");
@@ -11,6 +13,7 @@ function App() {
   const [answer, setAnswer] = useState('');
   const [questions,setQuestions]=useState(0);
   const [quizId,setQuizId]=useState('Enter your Quiz id or Code');
+  
   //admin
   const [adminName,setAdminName]=useState("Enter Your Name");
   const [quizTitle, setQuizTitle] = useState("Enter Your Quiz Title");
@@ -22,6 +25,8 @@ function App() {
   const [option4Form, setOption4Form] = useState('Answer Option 4');
   const [correctForm, setCorrectForm] = useState('Enter Correct Answer');
   const [dataFromServer, setDataFromServer] = useState([]);
+  
+  //Main Return Statement
   return (
     <UserContext.Provider value={{
       userName,setUserName,
@@ -41,8 +46,10 @@ function App() {
       correctForm, setCorrectForm,
       quizId,setQuizId,
       dataFromServer, setDataFromServer,
+
     }}>
       <Switch>
+        {/* Main Router ****Page Navigation**** */}
         <Router/>
       </Switch>
     </UserContext.Provider>
